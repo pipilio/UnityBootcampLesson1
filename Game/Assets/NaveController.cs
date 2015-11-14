@@ -5,12 +5,11 @@ public class NaveController : MonoBehaviour {
 
 	public GameObject nave;
 	private bool landed;
-	private Vector3 initialAcceleration, gravityVector, translation;
-	private float gravity;
+	private Vector3 initialAcceleration, gravityVector, velocity, translation, acceleration;
+	public float gravity;
 
 	void Start () {
 		landed = false;
-		gravity = 0.2f;
 		gravityVector = Vector3.down * gravity;
 		initialAcceleration = Vector3.zero;
 	}
@@ -24,7 +23,9 @@ public class NaveController : MonoBehaviour {
 		
 		if(!landed)
 		{
-			translation = initialAcceleration + gravityVector * Time.fixedTime;
+			acceleration = gravityVector;
+			velocity = velocity + acceleration * Time.deltaTime;
+			translation = translation + velocity * Time.deltaTime;
 			nave.transform.Translate(translation);
 		}
 	}
